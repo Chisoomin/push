@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "601140055641",
+    "project_id": "fingerpush2-98061",
+    "storage_bucket": "fingerpush2-98061.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:601140055641:android:44efa146863b99c132ab48",
+        "android_client_info": {
+          "package_name": "com.example.naver_movie_searching2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "601140055641-mrhkfb71jiptdvpki04767gl4qd0ace9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVIV1jQNT5p6WVDk9XTPxfrO9fGTtPd6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "601140055641-mrhkfb71jiptdvpki04767gl4qd0ace9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:601140055641:android:cdafa637424acb4232ab48",
+        "android_client_info": {
+          "package_name": "com.example.push_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "601140055641-mrhkfb71jiptdvpki04767gl4qd0ace9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVIV1jQNT5p6WVDk9XTPxfrO9fGTtPd6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "601140055641-mrhkfb71jiptdvpki04767gl4qd0ace9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
