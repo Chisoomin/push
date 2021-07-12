@@ -1,10 +1,15 @@
 package com.example.push_app;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -87,6 +92,8 @@ public class AlertFragment extends Fragment {
     Alert_Adapter alert_adapter;
     RecyclerView recyclerView;
     TextView nomsg;
+    BroadcastReceiver broadcastReceiver;
+    public static final String MY_ACTION = "com.example.push_app.action.ACTION_MY_BROADCAST";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -220,7 +227,7 @@ public class AlertFragment extends Fragment {
                 }
         );*/
 
-        class Mythread extends Thread{
+        /*class Mythread extends Thread{
             public void run(){
                 while (true){
                     list.clear();
@@ -282,9 +289,151 @@ public class AlertFragment extends Fragment {
             }
         }
         Mythread th = new Mythread();
-        th.start();
+        th.start();*/
+
+        //sendMyBroadcast();
+
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (MY_ACTION.equals(intent.getAction())) {
+                    list.clear();
+                    FingerPushManager.getInstance(view.getContext()).getPushList(
+                            new NetworkUtility.ObjectListener() { // 비동기 이벤트 리스너
+
+                                @Override
+                                public void onError(String code, String message) {
+
+                                }
+
+                                @Override
+                                public void onComplete(String code, String message, JSONObject object) {
+                                    JSONArray jsonArray = null;
+                                    try {
+                                        jsonArray = object.getJSONArray(PushList.PUSHLIST);
+
+                                        for (int i = 0; i < jsonArray.length(); i++) {
+                                            String msgTag = "메시지 태그 : " + jsonArray.getJSONObject(i).optString(PushList.MSGTAG);
+                                            String date = "발송 날짜 : " + jsonArray.getJSONObject(i).optString(PushList.DATE);
+                                            String title = "메시지 제목 : " + jsonArray.getJSONObject(i).optString(PushList.TITLE);
+                                            String content = "메시지 내용 : " + jsonArray.getJSONObject(i).optString(PushList.CONTENT);
+                                            String opend = "확인 여부 : " + jsonArray.getJSONObject(i).optString(PushList.OPENED);
+                                            String mode = "발송 모드 : " + jsonArray.getJSONObject(i).optString(PushList.MODE);
+                                            String imgCheck = "이미지 유무 : " + jsonArray.getJSONObject(i).optString(PushList.IMGCHECK);
+                                            String imgUrl = "이미지 주소 : " + jsonArray.getJSONObject(i).optString(PushList.IMGURL);
+                                            String labelCode = "라벨 코드 : " + jsonArray.getJSONObject(i).optString(PushList.LABELCODE);
+                                            String link = "웹 링크 : " + jsonArray.getJSONObject(i).optString(PushList.LINK);
+                                            String customKeyCheck = "커스텀 키 사용 여부 : " + jsonArray.getJSONObject(i).optString(PushList.CODE);
+                                            // ※ 커스텀 데이터가 있을 경우만 노출
+
+                                            //String customValue1 = jsonArray.getJSONObject(i).optString("custom_key_1");
+                                            //String customValue2 = jsonArray.getJSONObject(i).optString("custom_key_2");
+                                            //String customValue3 = jsonArray.getJSONObject(i).optString("custom_key_3");
+                                            Log.e("메시지 어케 들어오는지 확인", msgTag + "==" + date + "==" + title + "==" + content + "==" + opend + "==" + mode + "==" + imgCheck + "==" + imgUrl + "==" + labelCode + "==" + link + "==" + customKeyCheck);
+                                            list.add(new alert_getset(msgTag, date, title, content, opend, mode, imgCheck, imgUrl, labelCode, link, customKeyCheck));
+                                        }
+                                        Log.e("왜 오류"," "+jsonArray);
+                                        if(jsonArray==null){
+                                            nomsg.setVisibility(View.VISIBLE);
+                                        }else {
+                                            nomsg.setVisibility(View.GONE);
+                                            alert_adapter = new Alert_Adapter(list);
+                                            alert_adapter.notifyDataSetChanged();
+
+                                            recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+                                            recyclerView.setAdapter(alert_adapter);
+                                        }
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+
+                                }
+
+                            }
+                    );
+                }
+            }
+        };
+
+        FingerPushManager.getInstance(view.getContext()).getPushList(
+                new NetworkUtility.ObjectListener() { // 비동기 이벤트 리스너
+
+                    @Override
+                    public void onError(String code, String message) {
+
+                    }
+
+                    @Override
+                    public void onComplete(String code, String message, JSONObject object) {
+                        JSONArray jsonArray = null;
+                        try {
+                            jsonArray = object.getJSONArray(PushList.PUSHLIST);
+
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                String msgTag = "메시지 태그 : " + jsonArray.getJSONObject(i).optString(PushList.MSGTAG);
+                                String date = "발송 날짜 : " + jsonArray.getJSONObject(i).optString(PushList.DATE);
+                                String title = "메시지 제목 : " + jsonArray.getJSONObject(i).optString(PushList.TITLE);
+                                String content = "메시지 내용 : " + jsonArray.getJSONObject(i).optString(PushList.CONTENT);
+                                String opend = "확인 여부 : " + jsonArray.getJSONObject(i).optString(PushList.OPENED);
+                                String mode = "발송 모드 : " + jsonArray.getJSONObject(i).optString(PushList.MODE);
+                                String imgCheck = "이미지 유무 : " + jsonArray.getJSONObject(i).optString(PushList.IMGCHECK);
+                                String imgUrl = "이미지 주소 : " + jsonArray.getJSONObject(i).optString(PushList.IMGURL);
+                                String labelCode = "라벨 코드 : " + jsonArray.getJSONObject(i).optString(PushList.LABELCODE);
+                                String link = "웹 링크 : " + jsonArray.getJSONObject(i).optString(PushList.LINK);
+                                String customKeyCheck = "커스텀 키 사용 여부 : " + jsonArray.getJSONObject(i).optString(PushList.CODE);
+                                // ※ 커스텀 데이터가 있을 경우만 노출
+
+                                //String customValue1 = jsonArray.getJSONObject(i).optString("custom_key_1");
+                                //String customValue2 = jsonArray.getJSONObject(i).optString("custom_key_2");
+                                //String customValue3 = jsonArray.getJSONObject(i).optString("custom_key_3");
+                                Log.e("메시지 어케 들어오는지 확인", msgTag + "==" + date + "==" + title + "==" + content + "==" + opend + "==" + mode + "==" + imgCheck + "==" + imgUrl + "==" + labelCode + "==" + link + "==" + customKeyCheck);
+                                list.add(new alert_getset(msgTag, date, title, content, opend, mode, imgCheck, imgUrl, labelCode, link, customKeyCheck));
+                            }
+                            Log.e("왜 오류"," "+jsonArray);
+                            if(jsonArray==null){
+                                nomsg.setVisibility(View.VISIBLE);
+                            }else {
+                                nomsg.setVisibility(View.GONE);
+                                alert_adapter = new Alert_Adapter(list);
+                                alert_adapter.notifyDataSetChanged();
+
+                                recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+                                recyclerView.setAdapter(alert_adapter);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+
+                }
+        );
+
+
 
 
         return view;
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(MY_ACTION);
+        getContext().registerReceiver(broadcastReceiver, filter);
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        getContext().unregisterReceiver(broadcastReceiver);
+    }
+
+    /*public void sendMyBroadcast(){
+        Intent intent = new Intent(MY_ACTION);
+        getContext().sendBroadcast(intent);
+    }*/
+
 }

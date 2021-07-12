@@ -14,8 +14,7 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
+                <action android:name="com.example.push_app.action.ACTION_MY_BROADCAST"/>
             </intent-filter>
         </receiver>
 

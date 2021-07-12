@@ -1,6 +1,7 @@
 package com.example.push_app;
 
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
@@ -39,6 +40,7 @@ import org.json.JSONObject;
 
 import java.security.AllPermission;
 
+
 public class DrawerActivity extends AppCompatActivity {
 
     private ActivityDrawerBinding binding;
@@ -50,7 +52,6 @@ public class DrawerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mReceiver = new MyReceiver();
 
         String appKey ="BDPA1Q3EYA96";
         String secretKey = "dQ78sXDHgrUfJ2Q2S2uxOCuZUXN2GXtE";
@@ -116,13 +117,12 @@ public class DrawerActivity extends AppCompatActivity {
                 int id = menuItem.getItemId();
 
                 if(id == R.id.alert){
-                    sendMyBroadcast();
+                    //sendMyBroadcast();
                     appname.setText("알림");
                     FragmentManager fm = getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fm.beginTransaction();
                     fragmentTransaction.replace(R.id.maincontainer, new AlertFragment());
                     fragmentTransaction.commit();
-
                 }
                 else if(id==R.id.tag){
                     appname.setText("태그");
@@ -170,16 +170,18 @@ public class DrawerActivity extends AppCompatActivity {
             }
         });
 
+
+
     }
 
-    BroadcastReceiver br = new MyReceiver();
+    /*BroadcastReceiver br = new MyReceiver();
 
     @Override
     protected void onResume() {
         super.onResume();
-        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        filter.addAction(MyReceiver.MY_ACTION);
-        this.registerReceiver(br, filter);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(MY_ACTION);
+        registerReceiver(br, filter);
     }
     @Override
     protected void onPause() {
@@ -188,9 +190,9 @@ public class DrawerActivity extends AppCompatActivity {
     }
 
     public void sendMyBroadcast(){
-        Intent intent = new Intent(MyReceiver.MY_ACTION);
+        Intent intent = new Intent(MY_ACTION);
         sendBroadcast(intent);
-    }
+    }*/
 
 
 }

@@ -304,11 +304,6 @@ public class TagFragment extends Fragment {
                                 public void onComplete(String code, String message, JSONObject data) {
                                     list.clear();
                                     notag.setVisibility(View.GONE);
-                                    tagDBHelper dbHelper = new tagDBHelper(view.getContext());
-                                    SQLiteDatabase db = dbHelper.getWritableDatabase();
-                                    String query = "Insert into tagsave(tagname, tagdate) values ('" + edittag + "','" + getTime + "')";
-                                    db.execSQL(query);
-                                    db.close();
 
                                     FingerPushManager.getInstance(view.getContext()).getDeviceTag(
                                             new NetworkUtility.ObjectListener() { // 비동기 이벤트 리스너
@@ -368,11 +363,6 @@ public class TagFragment extends Fragment {
                                 public void onComplete(String code, String message, JSONObject data) {
                                     list.clear();
                                     notag.setVisibility(View.GONE);
-                                    tagDBHelper dbHelper = new tagDBHelper(view.getContext());
-                                    SQLiteDatabase db = dbHelper.getWritableDatabase();
-                                    String query = "Insert into tagsave(tagname, tagdate) values ('" + edittag + "','" + getTime + "')";
-                                    db.execSQL(query);
-                                    db.close();
 
                                 }
                             }
