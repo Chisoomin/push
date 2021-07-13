@@ -1,15 +1,22 @@
 package com.example.push_app;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,7 +54,7 @@ public class DrawerActivity extends AppCompatActivity {
     NavigationView navigationView;
     DrawerLayout drawLayout;
     ImageView logo;
-    TextView appname;
+    TextView appname, info;
     BroadcastReceiver mReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +84,8 @@ public class DrawerActivity extends AppCompatActivity {
         logo = findViewById(R.id.iv_logo);
         appname = findViewById(R.id.tv_appname);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //setSupportActionBar(toolbar);
+        info = findViewById(R.id.info);
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
@@ -98,7 +106,7 @@ public class DrawerActivity extends AppCompatActivity {
         });
 
 
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
+        /*ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
                 DrawerActivity.this,
                 drawLayout,
                 toolbar,
@@ -106,7 +114,7 @@ public class DrawerActivity extends AppCompatActivity {
                 R.string.navigation_drawer_close
         );
 
-        drawLayout.addDrawerListener(actionBarDrawerToggle);
+        drawLayout.addDrawerListener(actionBarDrawerToggle);*/
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -123,6 +131,7 @@ public class DrawerActivity extends AppCompatActivity {
                     FragmentTransaction fragmentTransaction = fm.beginTransaction();
                     fragmentTransaction.replace(R.id.maincontainer, new AlertFragment());
                     fragmentTransaction.commit();
+                    info.setVisibility(View.GONE);
                 }
                 else if(id==R.id.tag){
                     appname.setText("태그");
@@ -130,6 +139,23 @@ public class DrawerActivity extends AppCompatActivity {
                     FragmentTransaction fragmentTransaction = fm.beginTransaction();
                     fragmentTransaction.replace(R.id.maincontainer, new TagFragment());
                     fragmentTransaction.commit();
+                    info.setVisibility(View.VISIBLE);
+                    info.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Dialog dialog = new Dialog(DrawerActivity.this);
+                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                            dialog.setContentView(R.layout.dialog_tag);
+                            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                            lp.copyFrom(dialog.getWindow().getAttributes());
+                            lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+                            lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                            Window window = dialog.getWindow();
+                            window.setAttributes(lp);
+                            Linkify.addLinks((TextView) dialog.findViewById(R.id.textView14), Linkify.WEB_URLS);
+                            dialog.show();
+                        }
+                    });
                 }
                 else if(id==R.id.targeting){
                     appname.setText("타겟팅");
@@ -137,6 +163,27 @@ public class DrawerActivity extends AppCompatActivity {
                     FragmentTransaction fragmentTransaction = fm.beginTransaction();
                     fragmentTransaction.replace(R.id.maincontainer, new TargetingFragment());
                     fragmentTransaction.commit();
+                    info.setVisibility(View.VISIBLE);
+                    info.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Dialog dialog = new Dialog(DrawerActivity.this);
+                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                            dialog.setContentView(R.layout.dialog_targeting);
+                            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                            lp.copyFrom(dialog.getWindow().getAttributes());
+                            lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+                            lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                            Window window = dialog.getWindow();
+                            window.setAttributes(lp);
+                            Linkify.addLinks((TextView) dialog.findViewById(R.id.textView15), Linkify.ALL);
+                            dialog.show();
+                            /*View dialogView = getLayoutInflater().inflate(R.layout.dialog_targeting, null);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(DrawerActivity.this);
+                            builder.setView(dialogView);
+                            builder.show();*/
+                        }
+                    });
                 }
                 else if(id==R.id.appinfo){
                     appname.setText("앱정보");
@@ -144,6 +191,7 @@ public class DrawerActivity extends AppCompatActivity {
                     FragmentTransaction fragmentTransaction = fm.beginTransaction();
                     fragmentTransaction.replace(R.id.maincontainer, new AppInfoFragment());
                     fragmentTransaction.commit();
+                    info.setVisibility(View.GONE);
                 }
                 else if(id==R.id.guide){
                     appname.setText("이용가이드");
@@ -151,6 +199,8 @@ public class DrawerActivity extends AppCompatActivity {
                     FragmentTransaction fragmentTransaction = fm.beginTransaction();
                     fragmentTransaction.replace(R.id.maincontainer, new GuideFragment());
                     fragmentTransaction.commit();
+                    info.setVisibility(View.GONE);
+
                 }
                 else if(id==R.id.setting){
                     appname.setText("알림설정");
@@ -158,6 +208,8 @@ public class DrawerActivity extends AppCompatActivity {
                     FragmentTransaction fragmentTransaction = fm.beginTransaction();
                     fragmentTransaction.replace(R.id.maincontainer, new SettingFragment());
                     fragmentTransaction.commit();
+                    info.setVisibility(View.GONE);
+
                 }
 
                 return true;

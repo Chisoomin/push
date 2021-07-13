@@ -332,7 +332,6 @@ public class AlertFragment extends Fragment {
                                             Log.e("메시지 어케 들어오는지 확인", msgTag + "==" + date + "==" + title + "==" + content + "==" + opend + "==" + mode + "==" + imgCheck + "==" + imgUrl + "==" + labelCode + "==" + link + "==" + customKeyCheck);
                                             list.add(new alert_getset(msgTag, date, title, content, opend, mode, imgCheck, imgUrl, labelCode, link, customKeyCheck));
                                         }
-                                        Log.e("왜 오류"," "+jsonArray);
                                         if(jsonArray==null){
                                             nomsg.setVisibility(View.VISIBLE);
                                         }else {
@@ -390,11 +389,9 @@ public class AlertFragment extends Fragment {
                                 //String customValue3 = jsonArray.getJSONObject(i).optString("custom_key_3");
                                 Log.e("메시지 어케 들어오는지 확인", msgTag + "==" + date + "==" + title + "==" + content + "==" + opend + "==" + mode + "==" + imgCheck + "==" + imgUrl + "==" + labelCode + "==" + link + "==" + customKeyCheck);
                                 list.add(new alert_getset(msgTag, date, title, content, opend, mode, imgCheck, imgUrl, labelCode, link, customKeyCheck));
+
                             }
-                            Log.e("왜 오류"," "+jsonArray);
-                            if(jsonArray==null){
-                                nomsg.setVisibility(View.VISIBLE);
-                            }else {
+                            if(jsonArray!=null){
                                 nomsg.setVisibility(View.GONE);
                                 alert_adapter = new Alert_Adapter(list);
                                 alert_adapter.notifyDataSetChanged();

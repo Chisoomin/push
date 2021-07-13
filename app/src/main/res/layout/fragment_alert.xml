@@ -68,7 +68,6 @@
         android:text="알림메시지가 없습니다."
         android:textColor="#000000"
         android:textSize="20sp"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/recyclerView123"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,7 +80,5 @@
         android:background="#D8D8D8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintStart_toStartOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

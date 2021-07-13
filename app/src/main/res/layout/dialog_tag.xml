@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:scrollbars="vertical"
+    android:scrollbarAlwaysDrawVerticalTrack="true"
+    android:layout_width="350dp"
+    android:layout_height="400dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingTop="20dp"
+        android:paddingRight="20dp"
+        android:text="태그 푸시 정의"
+        android:textColor="#036B9A"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="태그 푸시는 알림을 받는 사용자들을 태그(키워드)로 구분하여 푸시 발송시 그룹별 푸시를 보내는 기능입니다. 예를 들어, 사용자들을 지역별, 연령별, 성별로 구분하여 태그를 설정하면 푸시 발송시 해당 태그를 선택하여 푸시 알림이 가능하고, 다중 태그 선택을 통해 and조건의 알림도 가능합니다."
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="태그 이용 안내"
+        android:textColor="#036B9A"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:linksClickable="true"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="20dp"
+        android:text="① 라이브 앱을 스마트폰에 설치\n② 라이브 앱 메뉴 중 \'태그\' 를 선택\n③ \'모든 태그\' 를 선택하면 나를 포함한 모든 사용자 태그 표시\n④ \'내 태그\'를 선택하면 현재 단말기 태그 표시\n⑤ 태그 입력란에 \'핑거푸시\'라고 입력하고 등롱을 선택하면 내 태그 목록에 \'핑거푸시\' 태그 확인 가능\n⑥ 태그 푸시를 발송하려면 www.fingerpush.com 에서 테스트 계정(partner@kissoft.co.kr, partner1234)으로 로그인 할 후 우측 상단의 아이디를 클릭하고 \'Service\' 메뉴를 선택\n⑦ 좌측 메뉴 중 \'Send Push\'를 클릭하고 App 을 선택한 후 메세지를 입력\n⑧ \'Settings\' 에서 원하는 \'Tag\'를 선택하고 푸시를 발송"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
