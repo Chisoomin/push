@@ -133,6 +133,15 @@ public class DrawerActivity extends AppCompatActivity {
                     fragmentTransaction.commit();
                     info.setVisibility(View.GONE);
                 }
+                else if(id == R.id.alert2){
+                    //sendMyBroadcast();
+                    appname.setText("알림 TWO");
+                    FragmentManager fm = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                    fragmentTransaction.replace(R.id.maincontainer, new Alert2Fragment());
+                    fragmentTransaction.commit();
+                    info.setVisibility(View.GONE);
+                }
                 else if(id==R.id.tag){
                     appname.setText("태그");
                     FragmentManager fm = getSupportFragmentManager();
