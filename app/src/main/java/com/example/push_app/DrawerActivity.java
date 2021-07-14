@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -104,7 +105,6 @@ public class DrawerActivity extends AppCompatActivity {
                 appname.setText(R.string.app_name);
             }
         });
-
 
         /*ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
                 DrawerActivity.this,

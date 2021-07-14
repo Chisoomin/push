@@ -1,9 +1,14 @@
 package com.example.push_app;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 
 class Alert_Adapter_vp extends RecyclerView.Adapter<Alert_Adapter_vp.AlertViewHolder>{
@@ -44,6 +51,33 @@ class Alert_Adapter_vp extends RecyclerView.Adapter<Alert_Adapter_vp.AlertViewHo
         holder.link.setText(list.get(position).getLink());
         holder.customKeyCheck.setText(list.get(position).getCustomKeyCheck());
 
+        String imgurl = list.get(position).getImgUrl().replace("이미지 주소 : ","").replace("mi","nfingerpush");
+
+        Handler handler = new Handler();
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL(imgurl);
+                    InputStream is = url.openStream();
+                    final Bitmap bm = BitmapFactory.decodeStream(is);
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            holder.image.setImageBitmap(bm);
+                        }
+                    });
+                    //holder.poster.setImageBitmap(bm);
+                } catch (Exception e) {
+                    holder.image.setVisibility(View.GONE);
+                }
+
+            }
+        });
+
+        t.start();
+
     }
 
     @Override
@@ -53,6 +87,7 @@ class Alert_Adapter_vp extends RecyclerView.Adapter<Alert_Adapter_vp.AlertViewHo
 
     public class AlertViewHolder extends RecyclerView.ViewHolder{
         TextView msgTag, tv_date, tv_title, tv_content, opend, mode, imgCheck, imgUrl, labelCode, link, customKeyCheck;
+        ImageView image;
         public AlertViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             msgTag = itemView.findViewById(R.id.msgtag);
@@ -66,6 +101,7 @@ class Alert_Adapter_vp extends RecyclerView.Adapter<Alert_Adapter_vp.AlertViewHo
             labelCode = itemView.findViewById(R.id.labelCode);
             link = itemView.findViewById(R.id.link);
             customKeyCheck = itemView.findViewById(R.id.customKeyCheck);
+            image = itemView.findViewById(R.id.image);
         }
     }
 }

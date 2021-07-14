@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -261,6 +262,7 @@ public class Alert2Fragment extends Fragment {
                                 list.add(new alert_getset(msgTag, date, title, content, opend, mode, imgCheck, imgUrl, labelCode, link, customKeyCheck));
 
                             }
+
                             if(jsonArray!=null){
                                 nomsg.setVisibility(View.GONE);
                                 alert_adapter = new Alert_Adapter_vp(list);
@@ -278,6 +280,7 @@ public class Alert2Fragment extends Fragment {
 
                 }
         );
+
 
 
         return view;
