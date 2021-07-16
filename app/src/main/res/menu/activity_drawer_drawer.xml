@@ -41,6 +41,12 @@
             android:title="이용가이드"
             />
         <item
+            android:id="@+id/draw"
+            android:icon="@drawable/ic_launcher_foreground"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:title="그리기"
+            />
+        <item
             android:id="@+id/setting"
             android:icon="@drawable/ic_launcher_foreground"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"

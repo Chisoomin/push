@@ -211,6 +211,14 @@ public class DrawerActivity extends AppCompatActivity {
                     info.setVisibility(View.GONE);
 
                 }
+                else if(id==R.id.draw){
+                    appname.setText("그리기");
+                    FragmentManager fm = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                    fragmentTransaction.replace(R.id.maincontainer, new DrawFragment());
+                    fragmentTransaction.commit();
+                    info.setVisibility(View.GONE);
+                }
                 else if(id==R.id.setting){
                     appname.setText("알림설정");
                     FragmentManager fm = getSupportFragmentManager();
