@@ -1,6 +1,8 @@
 package com.example.push_app;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -174,6 +176,8 @@ public class DrawFragment extends Fragment {
     //ArrayList<Point> erase = new ArrayList<Point>();
     ConstraintLayout pan;
     int colorr = Color.BLACK;
+    static int cnt = 0;
+    int mSelect=0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -258,6 +262,11 @@ public class DrawFragment extends Fragment {
                     Toast.makeText(view.getContext(), "저장 실패", Toast.LENGTH_SHORT).show();
                 }*/
                 File savePic = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+                /*File file = null;
+                if(cnt>=0){
+                    file = new File(savePic + "/sign"+cnt+".png"); //임의로 sdcard에 test.png로 저장
+                    cnt++;
+                }*/
                 File file = new File(savePic + "/sign.png"); //임의로 sdcard에 test.png로 저장
                 OutputStream outputStream = null;
 
@@ -268,17 +277,18 @@ public class DrawFragment extends Fragment {
                     signView.buildDrawingCache();
                     Bitmap bitmap = signView.getDrawingCache();
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-                    Toast.makeText(view.getContext(), "저장 성공"+savePic, Toast.LENGTH_SHORT).show();
+                    signView.destroyDrawingCache();
+                    Toast.makeText(view.getContext(), "저장 성공", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(view.getContext(), "저장 실패", Toast.LENGTH_SHORT).show();
-                } finally {
+                } /*finally {
                     try {
                         outputStream.close();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }
+                }*/
             }
         });
         resetbtn.setOnClickListener(new View.OnClickListener() {
@@ -298,6 +308,20 @@ public class DrawFragment extends Fragment {
                 Log.d("photo", savePic + "/sign.png");
                 signView.bitmap = bm;
                 signView.invalidate();
+                //String[] fname = new String[0];
+
+                /*for(int i =0;i>=cnt;i++){
+                    fname[i] = "sign"+i+".png";
+                }
+                new AlertDialog.Builder(view.getContext())
+                .setTitle("불러올 파일 선택")
+                .setSingleChoiceItems(Integer.parseInt(fname[0]), mSelect, new DialogInterface.OnClickListener(){
+
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });*/
 
                 /* try {
                     FileInputStream fis = null;
