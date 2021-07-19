@@ -34,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/menubtn">
 
-        <Button
+    <Button
             android:id="@+id/colorbtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,15 +42,6 @@
             android:layout_marginLeft="8dp"
             android:layout_weight="1"
             android:text="색상"
-            android:textStyle="bold"
-            app:backgroundTint="#4E9CDA" />
-
-        <Button
-            android:id="@+id/eraserbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="지우개"
             android:textStyle="bold"
             app:backgroundTint="#4E9CDA" />
 
@@ -79,7 +70,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_weight="1"
-            android:text="부르기"
+            android:text="불러오기"
             android:textStyle="bold"
             app:backgroundTint="#4E9CDA" />
     </LinearLayout>

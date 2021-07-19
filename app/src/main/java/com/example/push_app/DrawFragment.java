@@ -36,6 +36,8 @@ import java.io.OutputStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import yuku.ambilwarna.AmbilWarnaDialog;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link DrawFragment#newInstance} factory method to
@@ -87,78 +89,62 @@ public class DrawFragment extends Fragment {
     Button menubtn, colorbtn, eraserbtn, savebtn, resetbtn, callbtn;
     LinearLayout menulay;
     Bitmap callImage;
-    int color;
+    //int color;
 
     static class Point {
-        String mode;
         float x;
         float y;
         boolean check;
+        int color;
 
-        public Point(float x, float y, boolean check, String mode) {
+        public Point(float x, float y, boolean check, int color) {
             this.x = x;
             this.y = y;
             this.check = check;
+            this.color = color;
         }
 
     }
-    String mode="MODE_PEN";
+
+    //String mode="MODE_PEN";
     class SignView extends View {
 
+        //public int color;
+        //public String mode;
         Bitmap bitmap;
 
         public SignView(Context context) {
             super(context);
             bitmap = null;
+            //mode = "MODE_PEN";
         }
 
         @Override
         protected void onDraw(Canvas canvas) {
 
             super.onDraw(canvas);
-            canvas.drawColor(Color.WHITE);
-            if(bitmap!=null){
-                canvas.drawBitmap(bitmap,0,0,null);
-            } else {
-                Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-                callImage = null;
-                if (mode.equals("MODE_PEN")) {
-                    color = Color.RED;
-                    paint.setStrokeWidth(15);
-                    paint.setAntiAlias(true); // enable anti aliasing
-                    paint.setDither(true); // enable dithering
-                    paint.setStyle(Paint.Style.STROKE); // set to STOKE
-                    paint.setStrokeJoin(Paint.Join.ROUND); // set the join to round you want
-                    paint.setStrokeCap(Paint.Cap.ROUND);  // set the paint cap to round too
-                    for(int i=1;i<points.size();i++){
-                        paint.setColor(color);
-                        if(!points.get(i).check){
-                            continue;
-                        }
-                        canvas.drawLine(points.get(i-1).x, points.get(i-1).y, points.get(i).x, points.get(i).y, paint);
-                    }
-                } else {
-                    //ColorDrawable cd = (ColorDrawable) pan.getBackground();
-                    //color = cd.getColor();
-                    color = Color.WHITE;
-                    paint.setStrokeWidth(15);
-                    paint.setAntiAlias(true); // enable anti aliasing
-                    paint.setDither(true); // enable dithering
-                    paint.setStyle(Paint.Style.STROKE); // set to STOKE
-                    paint.setStrokeJoin(Paint.Join.ROUND); // set the join to round you want
-                    paint.setStrokeCap(Paint.Cap.ROUND);  // set the paint cap to round too
-                    for(int i=1;i<points.size();i++){
-                        if(!points.get(i).check){
-                            paint.setColor(color);
-                            //paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR)); // Paint에 위와같은 모드를 설정하면 지우개가 됩니다.
-                            continue;
-                        }
-                        canvas.drawLine(points.get(i-1).x, points.get(i-1).y, points.get(i).x, points.get(i).y, paint);
-                    }
-                }
+            //canvas.drawColor(Color.WHITE);
+            if (bitmap != null) {
+                canvas.drawBitmap(bitmap, 0, 0, null);
             }
+            Paint paint = new Paint();
+            callImage = null;
+            int colorbf = 0;
 
 
+            paint.setStrokeWidth(15);
+            paint.setAntiAlias(true); // enable anti aliasing
+            paint.setDither(true); // enable dithering
+            paint.setStyle(Paint.Style.STROKE); // set to STOKE
+            paint.setStrokeJoin(Paint.Join.ROUND); // set the join to round you want
+            paint.setStrokeCap(Paint.Cap.ROUND);  // set the paint cap to round too
+            for (int i = 1; i < points.size(); i++) {
+                paint.setColor(points.get(i).color);
+                if (!points.get(i).check) {
+                    continue;
+                }
+                canvas.drawLine(points.get(i - 1).x, points.get(i - 1).y, points.get(i).x, points.get(i).y, paint);
+            }
         }
 
         @Override
@@ -166,11 +152,11 @@ public class DrawFragment extends Fragment {
             float x = event.getX();
             float y = event.getY();
 
-            switch (event.getAction()){
+            switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    points.add(new Point(x, y, false, mode));
+                    points.add(new Point(x, y, false, colorr));
                 case MotionEvent.ACTION_MOVE:
-                    points.add(new Point(x, y, true, mode));
+                    points.add(new Point(x, y, true, colorr));
                     break;
                 case MotionEvent.ACTION_UP:
                     break;
@@ -182,13 +168,12 @@ public class DrawFragment extends Fragment {
         }
 
 
-
-
     }
 
     ArrayList<Point> points = new ArrayList<Point>();
+    //ArrayList<Point> erase = new ArrayList<Point>();
     ConstraintLayout pan;
-    //int color = Color.BLACK;
+    int colorr = Color.BLACK;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -197,7 +182,7 @@ public class DrawFragment extends Fragment {
         final SignView signView = new SignView(view.getContext());
         menubtn = view.findViewById(R.id.menubtn);
         colorbtn = view.findViewById(R.id.colorbtn);
-        eraserbtn = view.findViewById(R.id.eraserbtn);
+        //eraserbtn = view.findViewById(R.id.eraserbtn);
         savebtn = view.findViewById(R.id.savebtn);
         resetbtn = view.findViewById(R.id.resetbtn);
         callbtn = view.findViewById(R.id.callbtn);
@@ -205,12 +190,11 @@ public class DrawFragment extends Fragment {
         pan = view.findViewById(R.id.pan);
 
 
-
         menubtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int state = menulay.getVisibility();
-                Log.e("숫자로 뜬다고?", state + " ");
+                Log.d("숫자로 뜬다고?", state + " ");
                 if (state == 8) {
                     menulay.setVisibility(View.VISIBLE);
                 } else {
@@ -219,22 +203,36 @@ public class DrawFragment extends Fragment {
             }
         });
 
-
-
+        int[] initialColor = {Color.BLACK};
+        //signView.color = Color.BLACK;
         colorbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mode = "MODE_PEN";
+                AmbilWarnaDialog dialog = new AmbilWarnaDialog(view.getContext(), initialColor[0], new AmbilWarnaDialog.OnAmbilWarnaListener() {
+                    @Override
+                    public void onOk(AmbilWarnaDialog dialog, int color) {
+                        // color is the color selected by the user.
+                        initialColor[0] = color;
+                        colorr = color;
+                        //signView.color = color;
+                    }
+
+                    @Override
+                    public void onCancel(AmbilWarnaDialog dialog) {
+                        // cancel was selected by the user
+                    }
+                });
+                dialog.show();
             }
         });
-        eraserbtn.setOnClickListener(new View.OnClickListener() {
+        /*eraserbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mode = "MODE_ERASER";
-                Log.e("뭐지", mode);
+                signView.mode = "MODE_ERASER";
+                Log.e("뭐지", signView.mode);
                 //signView.bitmap = null;
             }
-        });
+        });*/
         savebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -260,7 +258,7 @@ public class DrawFragment extends Fragment {
                     Toast.makeText(view.getContext(), "저장 실패", Toast.LENGTH_SHORT).show();
                 }*/
                 File savePic = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-                File file = new File(savePic+"/sign.png"); //임의로 sdcard에 test.png로 저장
+                File file = new File(savePic + "/sign.png"); //임의로 sdcard에 test.png로 저장
                 OutputStream outputStream = null;
 
                 try {
@@ -270,8 +268,10 @@ public class DrawFragment extends Fragment {
                     signView.buildDrawingCache();
                     Bitmap bitmap = signView.getDrawingCache();
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+                    Toast.makeText(view.getContext(), "저장 성공"+savePic, Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     e.printStackTrace();
+                    Toast.makeText(view.getContext(), "저장 실패", Toast.LENGTH_SHORT).show();
                 } finally {
                     try {
                         outputStream.close();
