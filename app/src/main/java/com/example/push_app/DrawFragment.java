@@ -40,6 +40,8 @@ import java.util.ArrayList;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
+import static android.widget.Toast.LENGTH_SHORT;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link DrawFragment#newInstance} factory method to
@@ -278,10 +280,10 @@ public class DrawFragment extends Fragment {
                     Bitmap bitmap = signView.getDrawingCache();
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
                     signView.destroyDrawingCache();
-                    Toast.makeText(view.getContext(), "저장 성공", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "저장 성공", LENGTH_SHORT).show();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(view.getContext(), "저장 실패", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "저장 실패", LENGTH_SHORT).show();
                 } /*finally {
                     try {
                         outputStream.close();
@@ -308,6 +310,8 @@ public class DrawFragment extends Fragment {
                 Log.d("photo", savePic + "/sign.png");
                 signView.bitmap = bm;
                 signView.invalidate();
+                Toast.makeText(view.getContext(), "불러오기 : sign.png", LENGTH_SHORT).show();
+
                 //String[] fname = new String[0];
 
                 /*for(int i =0;i>=cnt;i++){
